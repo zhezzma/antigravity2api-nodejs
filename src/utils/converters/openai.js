@@ -47,7 +47,21 @@ function extractImagesFromContent(content) {
 function handleAssistantMessage(message, antigravityMessages, enableThinking, actualModelName, sessionId, hasTools) {
   const hasToolCalls = message.tool_calls && message.tool_calls.length > 0;
   console.log(message.content)
-  const hasContent = message.content && message.content.trim() !== '';
+  
+  // 处理 message.content 为数组的情况
+  let contentText = '';
+  if (Array.isArray(message.content)) {
+    for (const item of message.content) {
+      if (item.type === 'text') {
+        contentText += item.text;
+      }
+      // 忽略其他类型（如 image_url），因为 assistant 消息通常不包含图片
+    }
+  } else if (typeof message.content === 'string') {
+    contentText = message.content;
+  }
+  
+  const hasContent = contentText && contentText.trim() !== '';
   const { reasoningSignature, reasoningContent, toolSignature, toolContent } = getSignatureContext(sessionId, actualModelName, hasTools);
 
   const toolCalls = hasToolCalls
@@ -86,7 +100,7 @@ function handleAssistantMessage(message, antigravityMessages, enableThinking, ac
     }
   }
   if (hasContent) {
-    const part = { text: message.content.trimEnd() };
+    const part = { text: contentText.trimEnd() };
     parts.push(part);
   }
   if (!enableThinking && parts[0]) delete parts[0].thoughtSignature;
