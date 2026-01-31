@@ -46,6 +46,7 @@ function extractImagesFromContent(content) {
 
 function handleAssistantMessage(message, antigravityMessages, enableThinking, actualModelName, sessionId, hasTools) {
   const hasToolCalls = message.tool_calls && message.tool_calls.length > 0;
+  console.log(message.content)
   const hasContent = message.content && message.content.trim() !== '';
   const { reasoningSignature, reasoningContent, toolSignature, toolContent } = getSignatureContext(sessionId, actualModelName, hasTools);
 
