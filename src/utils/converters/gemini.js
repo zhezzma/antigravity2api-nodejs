@@ -177,6 +177,7 @@ export function generateGeminiRequestBody(geminiBody, modelName, token) {
   // 使用新的系统提示词构建函数，支持多 part 结构和位置配置
   const existingSystemInstruction = request.systemInstruction;
   const systemInstructionObj = buildSystemInstruction(existingSystemInstruction);
+  console.log(JSON.stringify(systemInstructionObj, null, 2))
   if (systemInstructionObj) {
     request.systemInstruction = systemInstructionObj;
   } else {
