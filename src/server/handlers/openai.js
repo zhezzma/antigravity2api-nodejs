@@ -69,7 +69,7 @@ export const handleOpenAIRequest = async (req, res) => {
 
     const isImageModel = model.includes('-image');
     const requestBody = generateRequestBody(messages, model, params, tools, token);
-    console.log(JSON.stringify(requestBody,null,2));
+    console.log(JSON.stringify(requestBody));
 
     if (isImageModel) {
       prepareImageRequest(requestBody);

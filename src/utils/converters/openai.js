@@ -136,6 +136,8 @@ export function generateRequestBody(openaiMessages, modelName, parameters, opena
 
   let filteredMessages = openaiMessages;
   let startIndex = 0;
+ console.log(JSON.stringify(openaiMessages));
+ console.log(config.useContextSystemPrompt);
   if (config.useContextSystemPrompt) {
     for (let i = 0; i < openaiMessages.length; i++) {
       if (openaiMessages[i].role === 'system') {
